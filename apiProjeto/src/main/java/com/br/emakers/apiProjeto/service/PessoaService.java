@@ -44,7 +44,7 @@ public class PessoaService {
         return new PessoaResponseDTO(pessoa);
     }
 
-    public String deletePessoa(Long idPessoa){
+    public String deletarPessoa(Long idPessoa){
         Pessoa pessoa = buscarPessoaPeloId(idPessoa);
         pessoaRepository.delete(pessoa);
         return "Pessoa iD: " + idPessoa + " deletada!";
