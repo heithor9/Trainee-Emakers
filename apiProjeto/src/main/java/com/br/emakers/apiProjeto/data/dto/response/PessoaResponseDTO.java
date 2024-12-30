@@ -4,13 +4,13 @@ import com.br.emakers.apiProjeto.data.entity.Pessoa;
 
 public record PessoaResponseDTO(
 
-        Long Id,
+        Long idPessoa,
 
         String nome,
 
         String cep
 ) {
     public PessoaResponseDTO(Pessoa pessoa) {
-        this(pessoa.get, )
+        this(pessoa.getIdPessoa(), pessoa.getNome(), pessoa.getCep());
     }
 }

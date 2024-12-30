@@ -23,10 +23,34 @@ public class PessoaService {
     }
 
     public PessoaResponseDTO buscarPessoaPorId(Long idPessoa) {
-        return null;
+        Pessoa pessoa = buscarPessoaPeloId(idPessoa);
+
+        return new PessoaResponseDTO(pessoa);
     }
 
-    public PessoaResponseDTO adicionarNovaPessoa(PessoaRequestDTO pessoaResponseDTO) {
-        return null;
+    public PessoaResponseDTO adicionarNovaPessoa(PessoaRequestDTO pessoaRequestDTO) {
+        Pessoa pessoa = new Pessoa(pessoaRequestDTO);
+        pessoaRepository.save(pessoa);
+
+        return new PessoaResponseDTO(pessoa);
+    }
+
+    public PessoaResponseDTO atualizarPessoa(Long idPessoa, PessoaRequestDTO pessoaRequestDTO) {
+        Pessoa pessoa = buscarPessoaPeloId(idPessoa);
+
+        pessoa.setNome(pessoaRequestDTO.nome());
+        pessoa.setCep(pessoaRequestDTO.cep());
+        pessoaRepository.save(pessoa);
+        return new PessoaResponseDTO(pessoa);
+    }
+
+    public String deletePessoa(Long idPessoa){
+        Pessoa pessoa = buscarPessoaPeloId(idPessoa);
+        pessoaRepository.delete(pessoa);
+        return "Pessoa iD: " + idPessoa + " deletada!";
+    }
+
+    private Pessoa buscarPessoaPeloId(Long idPessoa) {
+        return pessoaRepository.findById(idPessoa).orElseThrow(()-> new RuntimeException("Pessoa não encontrada"));
     }
 }

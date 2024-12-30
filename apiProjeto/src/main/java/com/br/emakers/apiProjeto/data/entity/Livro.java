@@ -28,7 +28,7 @@ public class Livro {
     private LocalDate dataPublicacao;
 
     @ManyToOne
-    @JoinColumn(name = "idPessoa")
+    @JoinColumn(name = "idLivro")
     private Pessoa pessoa;
 
     @Builder
@@ -37,5 +37,6 @@ public class Livro {
         this.autor = livroRequestDTO.autor();
         this.dataPublicacao = livroRequestDTO.data_publicacao();
     }
+
 
 }
