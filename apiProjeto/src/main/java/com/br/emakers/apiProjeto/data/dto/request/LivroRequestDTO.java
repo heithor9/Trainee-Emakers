@@ -1,8 +1,11 @@
 package com.br.emakers.apiProjeto.data.dto.request;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import org.springframework.cglib.core.Local;
+
+import java.sql.Date;
 import java.time.LocalDate;
 
 public record LivroRequestDTO(
@@ -12,9 +15,10 @@ public record LivroRequestDTO(
         @NotBlank(message = "O nome do autor é obrigatório.")
         String autor,
 
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
         @NotNull(message = "A data de publicação é obrigatória.")
         @PastOrPresent(message = "A data de publicação não pode ser no futuro.")
-        LocalDate data_publicacao
+        Date data_publicacao
 
 ) {
 }

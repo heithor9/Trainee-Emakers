@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Getter
@@ -25,11 +26,7 @@ public class Livro {
     private String autor;
 
     @Column(name = "data_publicacao", nullable = false)
-    private LocalDate dataPublicacao;
-
-    @ManyToOne
-    @JoinColumn(name = "idLivro")
-    private Pessoa pessoa;
+    private Date dataPublicacao;
 
     @Builder
     public Livro(LivroRequestDTO livroRequestDTO) {
@@ -37,6 +34,5 @@ public class Livro {
         this.autor = livroRequestDTO.autor();
         this.dataPublicacao = livroRequestDTO.data_publicacao();
     }
-
 
 }

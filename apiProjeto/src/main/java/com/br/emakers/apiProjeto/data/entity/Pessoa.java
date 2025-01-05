@@ -23,16 +23,11 @@ public class Pessoa {
     @Column(name = "cep", nullable = false, length = 9)
     private String cep;
 
-    @OneToMany
-    @JoinColumn(name = "idLivro")
-    private Livro livro;
 
     @Builder
     public Pessoa(PessoaRequestDTO pessoaRequestDTO) {
         this.nome = pessoaRequestDTO.nome();
         this.cep = pessoaRequestDTO.cep();
     }
-
-
 }
 
