@@ -2,7 +2,7 @@ package com.br.emakers.apiProjeto.data.dto.response;
 
 import com.br.emakers.apiProjeto.data.entity.Livro;
 
-import java.sql.Date;
+import java.util.Date;
 import java.time.LocalDate;
 
 public record LivroResponseDTO(

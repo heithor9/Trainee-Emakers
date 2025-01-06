@@ -3,6 +3,7 @@ package com.br.emakers.apiProjeto.service;
 import com.br.emakers.apiProjeto.data.dto.request.PessoaRequestDTO;
 import com.br.emakers.apiProjeto.data.dto.response.PessoaResponseDTO;
 import com.br.emakers.apiProjeto.data.entity.Pessoa;
+import com.br.emakers.apiProjeto.exceptions.general.EntityNotFoundException;
 import com.br.emakers.apiProjeto.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,6 @@ public class PessoaService {
 
     public PessoaResponseDTO buscarPessoaPorId(Long idPessoa) {
         Pessoa pessoa = buscarPessoaPeloId(idPessoa);
-
         return new PessoaResponseDTO(pessoa);
     }
 
@@ -51,6 +51,6 @@ public class PessoaService {
     }
 
     private Pessoa buscarPessoaPeloId(Long idPessoa) {
-        return pessoaRepository.findById(idPessoa).orElseThrow(()-> new RuntimeException("Pessoa não encontrada"));
+        return pessoaRepository.findById(idPessoa).orElseThrow(()-> new EntityNotFoundException(idPessoa));
     }
 }

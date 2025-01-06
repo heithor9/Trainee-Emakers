@@ -3,13 +3,14 @@ package com.br.emakers.apiProjeto.service;
 import com.br.emakers.apiProjeto.data.dto.request.LivroRequestDTO;
 import com.br.emakers.apiProjeto.data.dto.response.LivroResponseDTO;
 import com.br.emakers.apiProjeto.data.entity.Livro;
+import com.br.emakers.apiProjeto.exceptions.general.EntityNotFoundException;
 import com.br.emakers.apiProjeto.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+import java.util.Date;
 @Service
 public class LivroService {
 
@@ -56,6 +57,6 @@ public class LivroService {
 
     // Método privado para buscar livro pelo ID
     private Livro buscarLivroPeloId(Long idLivro) {
-        return livroRepository.findById(idLivro).orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+        return livroRepository.findById(idLivro).orElseThrow(() -> new EntityNotFoundException(idLivro));
     }
 }

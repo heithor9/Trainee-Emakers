@@ -1,5 +1,4 @@
 package com.br.emakers.apiProjeto.data.dto.request;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
