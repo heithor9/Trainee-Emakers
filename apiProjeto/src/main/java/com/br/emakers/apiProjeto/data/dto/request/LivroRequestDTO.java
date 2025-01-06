@@ -16,7 +16,10 @@ public record LivroRequestDTO(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
         @NotNull(message = "A data de publicação é obrigatória.")
         @PastOrPresent(message = "A data de publicação não pode ser no futuro.")
-        Date data_publicacao
+        Date data_publicacao,
+
+
+        Boolean disponivel
 
 ) {
 }

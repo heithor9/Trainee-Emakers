@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -23,6 +25,8 @@ public class Pessoa {
     @Column(name = "cep", nullable = false, length = 9)
     private String cep;
 
+    @ManyToMany(mappedBy = "pessoas")
+    private List<Livro> livros;
 
     @Builder
     public Pessoa(PessoaRequestDTO pessoaRequestDTO) {

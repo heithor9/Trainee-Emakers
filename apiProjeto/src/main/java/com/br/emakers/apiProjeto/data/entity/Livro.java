@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -27,11 +28,27 @@ public class Livro {
     @Column(name = "data_publicacao", nullable = false)
     private Date dataPublicacao;
 
+    @Column(name = "disponivel", nullable = false)
+    private Boolean disponivel;
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "Emprestimo",
+            joinColumns = @JoinColumn(name = "idLivro"),
+            inverseJoinColumns = @JoinColumn(name = "idPessoa")
+    )
+    private List<Pessoa> pessoas;
+
     @Builder
     public Livro(LivroRequestDTO livroRequestDTO) {
         this.nome = livroRequestDTO.nome();
         this.autor = livroRequestDTO.autor();
         this.dataPublicacao = livroRequestDTO.data_publicacao();
+        this.disponivel = livroRequestDTO.disponivel();
     }
 
+
+    public boolean isDisponivel() {
+        return disponivel;
+    }
 }
