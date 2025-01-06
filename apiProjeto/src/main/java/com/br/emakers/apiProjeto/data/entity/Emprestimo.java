@@ -8,11 +8,12 @@ import lombok.Setter;
 import java.time.LocalDate;
 import java.util.Date;
 
-@Getter
-@Setter
 @Entity
 @Table(name = "emprestimo")
+@Getter
+@Setter
 public class Emprestimo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEmprestimo;
@@ -25,12 +26,13 @@ public class Emprestimo {
     @JoinColumn(name = "livro_id", nullable = false)
     private Livro livro;
 
-    @Column(name = "data_emprestimo", nullable = true)
+    @Column(name = "data_emprestimo", nullable = false)
     private LocalDate dataEmprestimo;
 
     @Column(name = "data_devolucao", nullable = true)
     private LocalDate dataDevolucao;
 
-    public Emprestimo(EmprestimoRequestDTO emprestimoRequestDTO) {
+    public Emprestimo() {
     }
 }
+

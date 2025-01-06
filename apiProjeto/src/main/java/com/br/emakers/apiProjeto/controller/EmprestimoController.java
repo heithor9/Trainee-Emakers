@@ -20,12 +20,12 @@ public class EmprestimoController {
 
     @PostMapping("/borrow")
     public ResponseEntity<EmprestimoResponseDTO> realizarEmprestimo(@Valid @RequestBody EmprestimoRequestDTO emprestimoRequestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(emprestimoService.realizarEmprestimo(emprestimoRequestDTO));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(emprestimoService.realizarEmprestimo(emprestimoRequestDTO));
     }
 
-    @PostMapping("/return")
-    public ResponseEntity<Void> devolverLivro(@PathVariable Long emprestimoId) {
-        emprestimoService.devolverLivro(emprestimoId);
-        return ResponseEntity.noContent().build();
-    }
+
+
+
+
 }
