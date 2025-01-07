@@ -1,5 +1,6 @@
 package com.br.emakers.apiProjeto.data.entity;
 import com.br.emakers.apiProjeto.data.dto.request.LivroRequestDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,14 +32,6 @@ public class Livro {
     @Column(name = "disponivel", nullable = false)
     private Boolean disponivel;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "Emprestimo",
-            joinColumns = @JoinColumn(name = "idLivro"),
-            inverseJoinColumns = @JoinColumn(name = "idPessoa")
-    )
-    private List<Pessoa> pessoas;
-
     @Builder
     public Livro(LivroRequestDTO livroRequestDTO) {
         this.nome = livroRequestDTO.nome();
@@ -46,7 +39,6 @@ public class Livro {
         this.dataPublicacao = livroRequestDTO.data_publicacao();
         this.disponivel = livroRequestDTO.disponivel();
     }
-
 
     public boolean isDisponivel() {
         return disponivel;

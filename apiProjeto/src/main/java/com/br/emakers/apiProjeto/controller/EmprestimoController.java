@@ -3,6 +3,7 @@ package com.br.emakers.apiProjeto.controller;
 import com.br.emakers.apiProjeto.data.dto.request.EmprestimoRequestDTO;
 import com.br.emakers.apiProjeto.data.dto.request.LivroRequestDTO;
 import com.br.emakers.apiProjeto.data.dto.response.EmprestimoResponseDTO;
+import com.br.emakers.apiProjeto.data.dto.response.LivroResponseDTO;
 import com.br.emakers.apiProjeto.data.entity.Emprestimo;
 import com.br.emakers.apiProjeto.service.EmprestimoService;
 import jakarta.validation.Valid;
@@ -20,11 +21,13 @@ public class EmprestimoController {
 
     @PostMapping("/borrow")
     public ResponseEntity<EmprestimoResponseDTO> realizarEmprestimo(@Valid @RequestBody EmprestimoRequestDTO emprestimoRequestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(emprestimoService.realizarEmprestimo(emprestimoRequestDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(emprestimoService.realizarEmprestimo(emprestimoRequestDTO));
     }
 
-
+    @PutMapping(value = "/return")
+    public ResponseEntity<EmprestimoResponseDTO> realizarDevolucao(@PathVariable Long idEmprestimo, @Valid @RequestBody EmprestimoRequestDTO emprestimoRequestDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(emprestimoService.realizarDevolucao(idEmprestimo, emprestimoRequestDTO));
+    }
 
 
 

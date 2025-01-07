@@ -5,8 +5,7 @@ import com.br.emakers.apiProjeto.data.dto.response.EmprestimoResponseDTO;
 import com.br.emakers.apiProjeto.data.entity.Emprestimo;
 import com.br.emakers.apiProjeto.data.entity.Livro;
 import com.br.emakers.apiProjeto.data.entity.Pessoa;
-import com.br.emakers.apiProjeto.exceptions.general.EntityNotFoundException;
-import com.br.emakers.apiProjeto.exceptions.general.LoanNotFoundException;
+import com.br.emakers.apiProjeto.exceptions.general.GeneralExceptionHandler;
 import com.br.emakers.apiProjeto.repository.EmprestimoRepository;
 import com.br.emakers.apiProjeto.repository.LivroRepository;
 import com.br.emakers.apiProjeto.repository.PessoaRepository;
@@ -21,43 +20,38 @@ import java.time.LocalDate;
 public class EmprestimoService {
 
     @Autowired
-    private LivroRepository livroRepository;
+    private PessoaRepository pessoaRepository;
 
     @Autowired
-    private PessoaRepository pessoaRepository;
+    private LivroRepository livroRepository;
 
     @Autowired
     private EmprestimoRepository emprestimoRepository;
 
-    public EmprestimoResponseDTO realizarEmprestimo(EmprestimoRequestDTO emprestimoRequestDTO) {
-        // Busca a entidade Pessoa pelo ID
-        Pessoa pessoa = pessoaRepository.findById(emprestimoRequestDTO.idPessoa())
-                .orElseThrow(() -> new EntityNotFoundException(emprestimoRequestDTO.idPessoa()));
+    public EmprestimoResponseDTO realizarEmprestimo(EmprestimoRequestDTO dto) {
+        Pessoa pessoa = pessoaRepository.findById(dto.idPessoa())
+                .orElseThrow(() -> new RuntimeException("Pessoa não encontrada com ID: " + dto.idPessoa()));
 
-        // Busca a entidade Livro pelo ID
-        Livro livro = livroRepository.findById(emprestimoRequestDTO.idLivro())
-                .orElseThrow(() -> new EntityNotFoundException(emprestimoRequestDTO.idLivro()));
+        Livro livro = livroRepository.findById(dto.idLivro())
+                .orElseThrow(() -> new RuntimeException("Livro não encontrado com ID: " + dto.idLivro()));
 
-        // Verifica se o livro está disponível
-        if (!livro.isDisponivel()) {
-            throw new IllegalArgumentException("O livro já está emprestado!");
-        }
-
-        // Cria o empréstimo e associa Pessoa e Livro
+        if (livro.isDisponivel()) {
         Emprestimo emprestimo = new Emprestimo();
         emprestimo.setPessoa(pessoa);
-        emprestimo.setLivro(livro);
-        emprestimo.setDataEmprestimo(LocalDate.now()); // Define a data de empréstimo automaticamente
-        emprestimo.setDataDevolucao(null); // Certifica-se de que a data de devolução está nula
-
-        // Atualiza a disponibilidade do livro
         livro.setDisponivel(false);
-        livroRepository.save(livro);
+        emprestimo.setLivro(livro);
+        emprestimo.setDataEmprestimo(LocalDate.now()); // Adiciona a data atual
 
-        // Salva o empréstimo no repositório
         emprestimoRepository.save(emprestimo);
 
-        return new EmprestimoResponseDTO(emprestimo);
+        return new EmprestimoResponseDTO(emprestimo); }
+
+        else
+            return null;
+    }
+
+    public EmprestimoResponseDTO realizarDevolucao(Long idEmprestimo, EmprestimoRequestDTO dto) {
+        Emprestimo emprestimo = emprestimoRepository.findById(dto.idEmprestimo()).orElseThrow(() -> new RuntimeException(("Emprestimo não encontrado com ID: " + dto.idEmprestimo)));
     }
 }
 
@@ -76,7 +70,7 @@ public class EmprestimoService {
 
         emprestimo.setDataDevolucao(LocalDate.now());
         emprestimoRepository.save(emprestimo);
-    }*/
+    }
 
 
 

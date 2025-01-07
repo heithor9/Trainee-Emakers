@@ -8,5 +8,4 @@ public record EmprestimoRequestDTO(
 
         Long idLivro
 ) {
-
 }
