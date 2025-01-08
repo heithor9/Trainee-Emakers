@@ -5,7 +5,6 @@ import com.br.emakers.apiProjeto.data.dto.response.EmprestimoResponseDTO;
 import com.br.emakers.apiProjeto.data.entity.Emprestimo;
 import com.br.emakers.apiProjeto.data.entity.Livro;
 import com.br.emakers.apiProjeto.data.entity.Pessoa;
-import com.br.emakers.apiProjeto.exceptions.general.GeneralExceptionHandler;
 import com.br.emakers.apiProjeto.repository.EmprestimoRepository;
 import com.br.emakers.apiProjeto.repository.LivroRepository;
 import com.br.emakers.apiProjeto.repository.PessoaRepository;
@@ -50,11 +49,22 @@ public class EmprestimoService {
             return null;
     }
 
-    public EmprestimoResponseDTO realizarDevolucao(Long idEmprestimo, EmprestimoRequestDTO dto) {
-        Emprestimo emprestimo = emprestimoRepository.findById(dto.idEmprestimo()).orElseThrow(() -> new RuntimeException(("Emprestimo não encontrado com ID: " + dto.idEmprestimo)));
-    }
-}
+    public EmprestimoResponseDTO realizarDevolucao(Long idEmprestimo) {
+        Emprestimo emprestimo = emprestimoRepository.findById(idEmprestimo)
+                .orElseThrow(() -> new RuntimeException("Emprestimo não encontrado com ID: " + idEmprestimo));
 
+        emprestimo.setDataDevolucao(LocalDate.now());
+        emprestimo.getLivro().setDisponivel(true);
+
+        // Salva a alteração na disponibilidade do livro
+        livroRepository.save(emprestimo.getLivro());
+
+        // Retorna a resposta
+        return new EmprestimoResponseDTO(emprestimo);
+    }
+
+
+}
 
 
 
@@ -71,7 +81,7 @@ public class EmprestimoService {
         emprestimo.setDataDevolucao(LocalDate.now());
         emprestimoRepository.save(emprestimo);
     }
-
+*/
 
 
 

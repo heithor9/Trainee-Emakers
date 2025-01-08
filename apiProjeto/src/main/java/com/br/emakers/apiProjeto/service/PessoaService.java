@@ -53,4 +53,5 @@ public class PessoaService {
     private Pessoa buscarPessoaPeloId(Long idPessoa) {
         return pessoaRepository.findById(idPessoa).orElseThrow(()-> new EntityNotFoundException(idPessoa));
     }
+
 }

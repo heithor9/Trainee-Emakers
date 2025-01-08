@@ -24,9 +24,9 @@ public class EmprestimoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(emprestimoService.realizarEmprestimo(emprestimoRequestDTO));
     }
 
-    @PutMapping(value = "/return")
-    public ResponseEntity<EmprestimoResponseDTO> realizarDevolucao(@PathVariable Long idEmprestimo, @Valid @RequestBody EmprestimoRequestDTO emprestimoRequestDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(emprestimoService.realizarDevolucao(idEmprestimo, emprestimoRequestDTO));
+    @PutMapping(value = "/return/{idEmprestimo}")
+    public ResponseEntity<EmprestimoResponseDTO> realizarDevolucao(@PathVariable Long idEmprestimo) {
+        return ResponseEntity.status(HttpStatus.OK).body(emprestimoService.realizarDevolucao(idEmprestimo));
     }
 
 

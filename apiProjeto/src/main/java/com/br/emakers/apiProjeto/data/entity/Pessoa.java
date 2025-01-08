@@ -26,7 +26,6 @@ public class Pessoa {
     @Column(name = "cep", nullable = false, length = 9)
     private String cep;
 
-
     @Builder
     public Pessoa(PessoaRequestDTO pessoaRequestDTO) {
         this.nome = pessoaRequestDTO.nome();
