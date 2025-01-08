@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS usuario (
+    id_usuario TEXT PRIMARY KEY UNIQUE NOT NULL,
+    login TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    role TEXT NOT NULL
+);
