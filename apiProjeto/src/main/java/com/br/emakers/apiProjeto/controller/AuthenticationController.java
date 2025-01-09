@@ -2,7 +2,9 @@ package com.br.emakers.apiProjeto.controller;
 
 import com.br.emakers.apiProjeto.data.dto.request.AuthenticationRequestDTO;
 import com.br.emakers.apiProjeto.data.dto.request.RegisterRequestDTO;
+import com.br.emakers.apiProjeto.data.dto.response.LoginResponseDTO;
 import com.br.emakers.apiProjeto.data.entity.Usuario;
+import com.br.emakers.apiProjeto.infra.security.TokenService;
 import com.br.emakers.apiProjeto.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +24,21 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private UsuarioRepository repository;
-
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AuthenticationRequestDTO data) {
-        var usernamePassowrd = new UsernamePasswordAuthenticationToken(data.login(),data.password());
-        var auth = this.authenticationManager.authenticate(usernamePassowrd);
+    public ResponseEntity login(@RequestBody @Valid AuthenticationRequestDTO data){
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+        var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok().build();
+        var token = tokenService.generateToken((Usuario) auth.getPrincipal());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
-
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO data) {
+    public ResponseEntity register(@RequestBody @Valid RegisterRequestDTO data){
         if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.badRequest().build();
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
