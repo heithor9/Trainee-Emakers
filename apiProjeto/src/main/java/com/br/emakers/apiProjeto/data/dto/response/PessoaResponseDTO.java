@@ -8,9 +8,15 @@ public record PessoaResponseDTO(
 
         String nome,
 
-        String cep
+        String cep,
+
+        String logradouro,
+
+        String bairro,
+
+        String uf
 ) {
     public PessoaResponseDTO(Pessoa pessoa) {
-        this(pessoa.getIdPessoa(), pessoa.getNome(), pessoa.getCep());
+        this(pessoa.getIdPessoa(), pessoa.getNome(), pessoa.getCep(), pessoa.getLogradouro(), pessoa.getBairro(), pessoa.getUf());
     }
 }

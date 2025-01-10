@@ -9,7 +9,10 @@ CREATE TABLE IF NOT EXISTS livro (
 CREATE TABLE IF NOT EXISTS pessoa (
     id_pessoa BIGSERIAL PRIMARY KEY, -- Chave primária
     nome VARCHAR(45) NOT NULL,       -- Nome da pessoa, obrigatório
-    cep VARCHAR(9) NOT NULL          -- CEP da pessoa, obrigatório
+    cep VARCHAR(9) NOT NULL,         -- CEP da pessoa, obrigatório
+    bairro VARCHAR(45),
+    logradouro VARCHAR(45),
+    uf VARCHAR(2)
 );
 
 

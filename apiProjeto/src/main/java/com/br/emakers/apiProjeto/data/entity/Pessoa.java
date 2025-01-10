@@ -26,6 +26,11 @@ public class Pessoa {
     @Column(name = "cep", nullable = false, length = 9)
     private String cep;
 
+
+    private String logradouro;
+    private String bairro;
+    private String uf;
+
     @Builder
     public Pessoa(PessoaRequestDTO pessoaRequestDTO) {
         this.nome = pessoaRequestDTO.nome();

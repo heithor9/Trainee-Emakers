@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.MalformedURLException;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class PessoaController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<PessoaResponseDTO> adicionarNovaPessoa (@Valid @RequestBody PessoaRequestDTO pessoaRequestDTO) {
+    public ResponseEntity<PessoaResponseDTO> adicionarNovaPessoa (@Valid @RequestBody PessoaRequestDTO pessoaRequestDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.adicionarNovaPessoa(pessoaRequestDTO));
     }
 

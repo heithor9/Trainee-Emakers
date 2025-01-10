@@ -32,7 +32,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST).hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE).hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT).hasRole("ADMIN")
-                        .anyRequest().hasRole("USER")
+                        .anyRequest().authenticated()
                 )
 
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

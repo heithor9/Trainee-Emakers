@@ -1,7 +1,8 @@
 package com.br.emakers.apiProjeto.data.entity;
 
 public enum UsuarioRole {
-    ADMIN("admin"), USER("usuario");
+    ADMIN("admin"),
+    USER("usuario");
 
     private String role;
 
