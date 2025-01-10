@@ -36,7 +36,7 @@ public class PessoaController {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.adicionarNovaPessoa(pessoaRequestDTO));
     }
 
-    @PutMapping(value = "uptade/{idPessoa}")
+    @PutMapping(value = "update/{idPessoa}")
     public ResponseEntity<PessoaResponseDTO> atualizarPessoa(@PathVariable Long idPessoa,@Valid  @RequestBody PessoaRequestDTO pessoaRequestDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.atualizarPessoa(idPessoa, pessoaRequestDTO));
     }

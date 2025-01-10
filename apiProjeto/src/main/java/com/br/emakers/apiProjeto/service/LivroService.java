@@ -43,6 +43,7 @@ public class LivroService {
         livro.setNome(livroRequestDTO.nome());
         livro.setAutor(livroRequestDTO.autor());
         livro.setDataPublicacao(livroRequestDTO.data_publicacao());
+        livro.setDisponivel(livroRequestDTO.disponivel());
         livroRepository.save(livro);
 
         return new LivroResponseDTO(livro);

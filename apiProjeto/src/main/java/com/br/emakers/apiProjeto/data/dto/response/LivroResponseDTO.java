@@ -13,7 +13,7 @@ public record LivroResponseDTO(
 
         String autor,
 
-        Date data_publicacao,
+        LocalDate data_publicacao,
 
         Boolean disponivel
 ) {

@@ -1,5 +1,6 @@
 package com.br.emakers.apiProjeto.exceptions.general;
 
+import com.br.emakers.apiProjeto.data.entity.Livro;
 import com.br.emakers.apiProjeto.exceptions.RestErrorMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,5 +25,23 @@ public class GeneralExceptionHandler{
                 .stream().map(fieldError -> new RestErrorMessage(HttpStatus.BAD_REQUEST, fieldError.getDefaultMessage()))
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    @ExceptionHandler(LivroIndisponivelException.class)
+    private ResponseEntity<RestErrorMessage> livroIndisponivelHandler(LivroIndisponivelException exception) {
+        RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(errorMessage.status()).body(errorMessage);
+    }
+
+    @ExceptionHandler(LoanNotFoundException.class)
+    private ResponseEntity<RestErrorMessage> loanNotFoundHandler(LoanNotFoundException exception) {
+        RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(errorMessage.status()).body(errorMessage);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    private ResponseEntity<RestErrorMessage> runtimeException(RuntimeException exception) {
+        RestErrorMessage errorMessage = new RestErrorMessage(HttpStatus.BAD_REQUEST, exception.getMessage());
+        return ResponseEntity.status(errorMessage.status()).body(errorMessage);
     }
 }

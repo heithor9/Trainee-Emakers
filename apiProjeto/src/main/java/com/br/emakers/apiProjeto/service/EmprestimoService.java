@@ -5,6 +5,8 @@ import com.br.emakers.apiProjeto.data.dto.response.EmprestimoResponseDTO;
 import com.br.emakers.apiProjeto.data.entity.Emprestimo;
 import com.br.emakers.apiProjeto.data.entity.Livro;
 import com.br.emakers.apiProjeto.data.entity.Pessoa;
+import com.br.emakers.apiProjeto.exceptions.general.LivroIndisponivelException;
+import com.br.emakers.apiProjeto.exceptions.general.LoanNotFoundException;
 import com.br.emakers.apiProjeto.repository.EmprestimoRepository;
 import com.br.emakers.apiProjeto.repository.LivroRepository;
 import com.br.emakers.apiProjeto.repository.PessoaRepository;
@@ -45,13 +47,16 @@ public class EmprestimoService {
 
         return new EmprestimoResponseDTO(emprestimo); }
 
-        else
-            return null;
+        else {
+            throw new LivroIndisponivelException("O livro com ID " + dto.idLivro() + " não está disponível para empréstimo.");
+        }
+
+
     }
 
     public EmprestimoResponseDTO realizarDevolucao(Long idEmprestimo) {
         Emprestimo emprestimo = emprestimoRepository.findById(idEmprestimo)
-                .orElseThrow(() -> new RuntimeException("Emprestimo não encontrado com ID: " + idEmprestimo));
+                .orElseThrow(() -> new LoanNotFoundException(idEmprestimo));
 
         emprestimo.setDataDevolucao(LocalDate.now());
         emprestimo.getLivro().setDisponivel(true);

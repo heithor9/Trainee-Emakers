@@ -3,6 +3,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -16,7 +18,7 @@ public record LivroRequestDTO(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
         @NotNull(message = "A data de publicação é obrigatória.")
         @PastOrPresent(message = "A data de publicação não pode ser no futuro.")
-        Date data_publicacao,
+        LocalDate data_publicacao,
 
 
         Boolean disponivel
