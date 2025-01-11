@@ -38,7 +38,7 @@ public class PessoaController {
     }
 
     @PutMapping(value = "update/{idPessoa}")
-    public ResponseEntity<PessoaResponseDTO> atualizarPessoa(@PathVariable Long idPessoa,@Valid  @RequestBody PessoaRequestDTO pessoaRequestDTO) {
+    public ResponseEntity<PessoaResponseDTO> atualizarPessoa(@PathVariable Long idPessoa,@Valid  @RequestBody PessoaRequestDTO pessoaRequestDTO) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.atualizarPessoa(idPessoa, pessoaRequestDTO));
     }
 

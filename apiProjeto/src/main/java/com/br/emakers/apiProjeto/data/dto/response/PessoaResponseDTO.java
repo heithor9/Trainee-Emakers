@@ -14,9 +14,11 @@ public record PessoaResponseDTO(
 
         String bairro,
 
+        String localidade,
+
         String uf
 ) {
     public PessoaResponseDTO(Pessoa pessoa) {
-        this(pessoa.getIdPessoa(), pessoa.getNome(), pessoa.getCep(), pessoa.getLogradouro(), pessoa.getBairro(), pessoa.getUf());
+        this(pessoa.getIdPessoa(), pessoa.getNome(), pessoa.getCep(), pessoa.getLogradouro(), pessoa.getBairro(), pessoa.getLocalidade(), pessoa.getUf());
     }
 }

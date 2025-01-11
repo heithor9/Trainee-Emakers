@@ -29,6 +29,7 @@ public class Pessoa {
 
     private String logradouro;
     private String bairro;
+    private String localidade;
     private String uf;
 
     @Builder

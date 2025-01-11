@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -57,6 +58,7 @@ public class PessoaService {
         pessoa.setLogradouro(pessoaAux.getLogradouro());
         pessoa.setBairro(pessoaAux.getBairro());
         pessoa.setUf(pessoaAux.getUf());
+        pessoa.setLocalidade(pessoaAux.getLocalidade());
 
         //** Consumindo API publica externa
 
@@ -65,11 +67,37 @@ public class PessoaService {
         return new PessoaResponseDTO(pessoa);
     }
 
-    public PessoaResponseDTO atualizarPessoa(Long idPessoa, PessoaRequestDTO pessoaRequestDTO) {
+    public PessoaResponseDTO atualizarPessoa(Long idPessoa, PessoaRequestDTO pessoaRequestDTO) throws Exception {
         Pessoa pessoa = buscarPessoaPeloId(idPessoa);
+
 
         pessoa.setNome(pessoaRequestDTO.nome());
         pessoa.setCep(pessoaRequestDTO.cep());
+
+
+        //** Consumindo API publica externa
+
+        URL url = new URL("https://viacep.com.br/ws/" +pessoa.getCep()+"/json/");
+        URLConnection connection = url.openConnection();
+        InputStream is = connection.getInputStream();
+        BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+        String cep = "";
+        StringBuilder jsonCep = new StringBuilder();
+
+        while ((cep = br.readLine()) != null) {
+            jsonCep.append(cep);
+        }
+
+        Pessoa pessoaAux = new Gson().fromJson(jsonCep.toString(), Pessoa.class);
+
+        pessoa.setLogradouro(pessoaAux.getLogradouro());
+        pessoa.setBairro(pessoaAux.getBairro());
+        pessoa.setUf(pessoaAux.getUf());
+        pessoa.setLocalidade(pessoaAux.getLocalidade());
+
+        //** Consumindo API publica externa
+
         pessoaRepository.save(pessoa);
         return new PessoaResponseDTO(pessoa);
     }

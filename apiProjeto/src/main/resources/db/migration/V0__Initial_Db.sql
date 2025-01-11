@@ -12,7 +12,9 @@ CREATE TABLE IF NOT EXISTS pessoa (
     cep VARCHAR(9) NOT NULL,         -- CEP da pessoa, obrigatório
     bairro VARCHAR(45),
     logradouro VARCHAR(45),
+    localidade VARCHAR(45),
     uf VARCHAR(2)
+
 );
 
 
